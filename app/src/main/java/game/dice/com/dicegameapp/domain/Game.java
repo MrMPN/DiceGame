@@ -24,4 +24,7 @@ public class Game {
 		return getSumDices()==7;
 	}
 
+	public int[] getValueDices(){
+		return new int[]{dice1.getValue(), dice2.getValue()};
+	}
 }

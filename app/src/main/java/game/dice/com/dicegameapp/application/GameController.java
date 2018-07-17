@@ -42,6 +42,11 @@ public class GameController {
 		return text;
 	}
 
+	public int[] getResultLastGame(){
+        List<Game> games = player.getAllGames();
+        return games.get(games.size()-1).getValueDices();
+    }
+
 	public double getPlayerRanking() {
 		List<Game> games = player.getAllGames();
 

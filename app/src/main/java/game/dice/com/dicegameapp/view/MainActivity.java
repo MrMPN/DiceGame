@@ -17,12 +17,11 @@ import game.dice.com.dicegameapp.R;
 import game.dice.com.dicegameapp.application.GameController;
 
 public class MainActivity extends AppCompatActivity {
-
+    GameController gc = new GameController();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final GameController gc = new GameController();
         FloatingActionButton fab = findViewById(R.id.addUser);
         Button button = findViewById(R.id.play);
 
@@ -38,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 gc.playGame();
-                Toast.makeText(MainActivity.this, gc.getPlayerGamesToString(), Toast.LENGTH_SHORT).show();
+                changeDice();
             }
         });
 
@@ -47,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        GameController gc = new GameController();
         if (gc.hasPlayer()) {
             changeDisplay(gc.getPlayerName());
         }
@@ -64,6 +62,19 @@ public class MainActivity extends AppCompatActivity {
         nameTextView.setText("Hello " + name + "!");
         button.setVisibility(View.VISIBLE);
         textView.setVisibility(View.GONE);
+    }
+
+    private void changeDice(){
+        //Find dice textviews
+        TextView dice1 = findViewById(R.id.dice1);
+        TextView dice2 = findViewById(R.id.dice2);
+        dice1.setVisibility(View.VISIBLE);
+        dice2.setVisibility(View.VISIBLE);
+        //Get the dice values
+        int[] diceValues = gc.getResultLastGame();
+        //And change the textviews to those values
+        dice1.setText(String.valueOf(diceValues[0]));
+        dice2.setText(String.valueOf(diceValues[1]));
     }
 
     @Override
