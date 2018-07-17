@@ -36,8 +36,9 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                gc.playGame();
+                boolean result = gc.playGame();
                 changeDice();
+                changeMessage(result);
             }
         });
 
@@ -47,11 +48,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (gc.hasPlayer()) {
-            changeDisplay(gc.getPlayerName());
+            changeDisplay();
         }
     }
 
-    private void changeDisplay(String name){
+    private void changeDisplay(){
         //Find all relevant views
         TextView nameTextView = findViewById(R.id.name);
         Button button = findViewById(R.id.play);
@@ -59,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
         //Change visibilities and set text to Hello User
         nameTextView.setVisibility(View.VISIBLE);
-        nameTextView.setText("Hello " + name + "!");
+        nameTextView.setText(gc.getPlayerName());
         button.setVisibility(View.VISIBLE);
         textView.setVisibility(View.GONE);
     }
@@ -75,6 +76,13 @@ public class MainActivity extends AppCompatActivity {
         //And change the textviews to those values
         dice1.setText(String.valueOf(diceValues[0]));
         dice2.setText(String.valueOf(diceValues[1]));
+    }
+
+    private void changeMessage(boolean result){
+        TextView message = findViewById(R.id.message);
+        message.setVisibility(View.VISIBLE);
+        if (result){message.setText("You've won!");}
+        else{message.setText("You've lost...");}
     }
 
     @Override
