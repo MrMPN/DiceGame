@@ -1,9 +1,13 @@
 package game.dice.com.dicegameapp.view;
 
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import game.dice.com.dicegameapp.R;
+import game.dice.com.dicegameapp.application.GameController;
 
 public class UserActivity extends AppCompatActivity {
 
@@ -11,5 +15,25 @@ public class UserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
+
+        final TextInputEditText input = findViewById(R.id.input);
+        final FloatingActionButton fab = findViewById(R.id.addName);
+
+        input.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                fab.setVisibility(View.VISIBLE);
+            }
+        });
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String name = input.getText().toString();
+                GameController gc = new GameController();
+                gc.createPlayer(name);
+                finish();
+            }
+        });
     }
 }

@@ -6,7 +6,7 @@ import game.dice.com.dicegameapp.domain.*;
 
 public class GameController {
 
-	private Player player;
+	private static Player player;
 
 
 	public GameController() {
@@ -14,11 +14,15 @@ public class GameController {
 	}
 
 	public void createPlayer(String name) {
-		this.player = new Player(name);
+		player = new Player(name);
 	}
 
 	public String getPlayerName() {
 		return player.getName();
+	}
+
+	public boolean hasPlayer(){
+		return (player != null);
 	}
 
 	public boolean playGame() {

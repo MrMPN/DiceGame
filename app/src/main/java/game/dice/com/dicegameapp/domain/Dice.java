@@ -1,5 +1,7 @@
 package game.dice.com.dicegameapp.domain;
 
+import android.util.Log;
+
 import java.util.Random;
 
 public class Dice {
@@ -13,6 +15,7 @@ public class Dice {
 	
 	public void rollDice() {
 		value=new Random().nextInt(DICE_SIDES)+1;
+		Log.d("DICE", String.valueOf(value));
 	}
 	
 	public int getValue() {
