@@ -31,7 +31,11 @@ public class UserActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String name = input.getText().toString();
                 GameController gc = new GameController();
-                gc.createPlayer(name);
+                try {
+                    gc.createPlayer(name);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 finish();
             }
         });
