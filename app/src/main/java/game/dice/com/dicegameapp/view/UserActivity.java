@@ -16,7 +16,7 @@ public class UserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
 
-        final TextInputEditText input = findViewById(R.id.input);
+        TextInputEditText input = findViewById(R.id.input);
         final FloatingActionButton fab = findViewById(R.id.addName);
 
         input.setOnClickListener(new View.OnClickListener() {
@@ -29,15 +29,20 @@ public class UserActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name = input.getText().toString();
-                GameController gc = new GameController();
-                try {
-                    gc.createPlayer(name);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                createPlayer();
                 finish();
             }
         });
+    }
+
+    private void createPlayer(){
+        TextInputEditText input = findViewById(R.id.input);
+        String name = input.getText().toString();
+        GameController gc = new GameController();
+        try {
+            gc.createPlayer(name);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

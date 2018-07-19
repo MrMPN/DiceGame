@@ -12,6 +12,6 @@ public class PlayerRepository {
 
     public void savePlayer(Player player) throws Exception {
         if (player == null)throw new Exception("Player not created");
-        this.player = player;
+        PlayerRepository.player = player;
     }
 }

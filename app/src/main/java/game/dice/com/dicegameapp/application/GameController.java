@@ -27,9 +27,9 @@ public class GameController {
 	}
 
 	public boolean playGame() throws Exception {
+		Player player = repository.getPlayer();
 		Game game = new Game();
 		boolean hasWon = game.playGame();
-		Player player = repository.getPlayer();
 		player.addGame(game);
 		return hasWon;
 	}
