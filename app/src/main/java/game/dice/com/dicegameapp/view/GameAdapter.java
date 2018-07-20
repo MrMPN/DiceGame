@@ -54,7 +54,6 @@ public class GameAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder holder;
-        // inflate the layout for each list row
         if (view == null) {
             view = LayoutInflater.from(context).
                     inflate(R.layout.list_item, viewGroup, false);
