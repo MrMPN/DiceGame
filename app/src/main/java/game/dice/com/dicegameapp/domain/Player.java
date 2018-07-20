@@ -8,8 +8,13 @@ public class Player {
 	private List<Game> games=new ArrayList<>();
 	private boolean hasPlayed = false;
 	
-	public Player(String name){		
-		this.name=name;
+	public Player(String name) throws IllegalArgumentException{
+		if (!name.equals("")){
+			this.name=name;
+		}
+		else{
+		    throw new IllegalArgumentException();
+        }
 	}
 	
 	public String getName(){

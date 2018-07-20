@@ -10,9 +10,10 @@ import java.text.NumberFormat;
 import game.dice.com.dicegameapp.R;
 import game.dice.com.dicegameapp.application.GameController;
 import game.dice.com.dicegameapp.application.dto.PlayerDTO;
+import game.dice.com.dicegameapp.utilities.MissingPlayerException;
 
 public class ResultActivity extends AppCompatActivity {
-    GameController gc = new GameController();
+    GameController controller = new GameController();
     PlayerDTO player;
     ListView listView;
     TextView percent;
@@ -24,11 +25,10 @@ public class ResultActivity extends AppCompatActivity {
 
         innitViews();
         try {
-            player = gc.getPlayer();   //Try to get Player
+            player = controller.getPlayer();   //Try to get Player
             setDisplay();              //If we got a player, set the display
 
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (MissingPlayerException e) {
             percent.setText(R.string.no_player_data);   //If there's no player, show a message
         }
     }

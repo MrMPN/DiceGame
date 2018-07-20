@@ -13,9 +13,10 @@ import android.widget.TextView;
 
 import game.dice.com.dicegameapp.R;
 import game.dice.com.dicegameapp.application.GameController;
+import game.dice.com.dicegameapp.utilities.MissingPlayerException;
 
 public class MainActivity extends AppCompatActivity {
-    GameController gc = new GameController();
+    GameController controller = new GameController();
     TextView nameTextView;
     Button playButton;
     TextView warningText;
@@ -36,8 +37,8 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         try {
             changeToGameMode();
-        } catch (Exception e) {
-            e.printStackTrace(); //No player, we print the error but do nothing
+        } catch (MissingPlayerException e) { //We do nothing
+            e.printStackTrace();
         }
     }
 
@@ -66,10 +67,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void changeToGameMode() throws Exception {
+    private void changeToGameMode() throws MissingPlayerException {
         innitViews();
         nameTextView.setVisibility(View.VISIBLE);
-        nameTextView.setText(gc.getPlayerName()); //This can throw an error
+        nameTextView.setText(controller.getPlayerName()); //This can throw an error
         playButton.setVisibility(View.VISIBLE);
         warningText.setVisibility(View.GONE);
     }
@@ -77,8 +78,8 @@ public class MainActivity extends AppCompatActivity {
     private void playGame(){
         try {
             innitViews();
-            boolean result = gc.playGame(); // This can throw an error
-            int[] diceValues = gc.getResultLastGame(); // This can throw an error
+            boolean result = controller.playGame(); // This can throw an error
+            int[] diceValues = controller.getResultLastGame(); // This can throw an error
             changeMessage(result);
             changeDice(diceValues);
         } catch (Exception e) {

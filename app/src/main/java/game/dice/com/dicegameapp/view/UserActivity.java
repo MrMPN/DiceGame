@@ -5,6 +5,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import game.dice.com.dicegameapp.R;
 import game.dice.com.dicegameapp.application.GameController;
@@ -32,18 +33,18 @@ public class UserActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 createPlayer();
-                finish();
             }
         });
     }
 
     private void createPlayer(){
         String name = input.getText().toString();
-        GameController gc = new GameController();
+        GameController controller = new GameController();
         try {
-            gc.createPlayer(name);
-        } catch (Exception e) {
-            e.printStackTrace();
+            controller.createPlayer(name);
+            finish();
+        } catch (IllegalArgumentException e) {
+            Toast.makeText(this, "Player name cannot be empty", Toast.LENGTH_SHORT).show();
         }
     }
 }

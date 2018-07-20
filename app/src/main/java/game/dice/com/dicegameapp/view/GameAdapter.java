@@ -16,11 +16,20 @@ import game.dice.com.dicegameapp.domain.Game;
 
 public class GameAdapter extends BaseAdapter {
 
+    static class ViewHolder{
+        TextView dice1;
+        TextView dice2;
+        TextView result;
+
+        public ViewHolder(View view) {
+            dice1 = view.findViewById(R.id.item_dice1);
+            dice2 = view.findViewById(R.id.item_dice2);
+            result = view.findViewById(R.id.item_result);
+        }
+    }
+
     private Context context;
     private List<GameDTO> items;
-    private TextView dice1;
-    private TextView dice2;
-    private TextView result;
 
     public GameAdapter (Context context, List<GameDTO> items) {
         this.context = context;
@@ -44,16 +53,22 @@ public class GameAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+        ViewHolder holder;
         // inflate the layout for each list row
         if (view == null) {
             view = LayoutInflater.from(context).
                     inflate(R.layout.list_item, viewGroup, false);
+            holder = new ViewHolder(view);
+            view.setTag(holder);
         }
-
-        return createLayout(view, i);
+        else {
+            holder = (ViewHolder) view.getTag();
+        }
+        createLayout(holder, i);
+        return view;
     }
 
-    private View createLayout(View view, int i){
+    private void createLayout(ViewHolder holder, int i){
         // Get current item to be displayed
         GameDTO currentGame = getItem(i);
 
@@ -61,24 +76,18 @@ public class GameAdapter extends BaseAdapter {
         int[] diceValues = currentGame.getValueDices();
         boolean hasWon = currentGame.hasWon();
 
-        //Find the views we want to modify
-        innitView(view);
         //And set the data
-        setData(diceValues, hasWon);
-
-        return view;
+        setData(holder, diceValues, hasWon);
     }
 
-    private void innitView (View view){
-        dice1 = view.findViewById(R.id.item_dice1);
-        dice2 = view.findViewById(R.id.item_dice2);
-        result = view.findViewById(R.id.item_result);
-    }
-
-    private void setData(int[] diceValues, boolean hasWon){
-        dice1.setText(String.valueOf(diceValues[0]));
-        dice2.setText(String.valueOf(diceValues[1]));
-        if (hasWon){result.setText(R.string.listview_won);}
-        else{result.setText(R.string.listview_lost);}
+    private void setData(ViewHolder holder, int[] diceValues, boolean hasWon){
+        holder.dice1.setText(String.valueOf(diceValues[0]));
+        holder.dice2.setText(String.valueOf(diceValues[1]));
+        if (hasWon){
+            holder.result.setText(R.string.listview_won);
+        }
+        else{
+            holder.result.setText(R.string.listview_lost);
+        }
     }
 }
