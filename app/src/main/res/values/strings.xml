@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">DiceGameApp</string>
+    <string name="listview_won">Won</string>
+    <string name="listview_lost">Lost</string>
+    <string name="main_won">You\'ve won!</string>
+    <string name="main_lost">You\'ve lost…</string>
+    <string name="no_played_yet">You haven\'t played yet</string>
+    <string name="no_player_data">No player data</string>
+    <string name="add_new_user">No user data, please add a new user</string>
+    <string name="throw_dice">THROW DICE</string>
+    <string name="enter_a_player_name">Enter a player name</string>
+    <string name="won_percent">You\'ve won  %1$s of the time.</string>
 </resources>

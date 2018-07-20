@@ -22,47 +22,42 @@ public class ResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
 
-        percent = findViewById(R.id.percent);
-
+        innitViews();
         try {
-            player = gc.getPlayer();
-
-            if (player.hasPlayed()) {
-                setAdapter();
-                showInfo();
-            }
-            else{
-                percent.setText("You haven't played yet");
-            }
+            player = gc.getPlayer();   //Try to get Player
+            setDisplay();              //If we got a player, set the display
 
         } catch (Exception e) {
             e.printStackTrace();
-            percent.setText("No player data");
+            percent.setText(R.string.no_player_data);   //If there's no player, show a message
         }
+    }
 
+
+    private void innitViews(){
+        listView = findViewById(R.id.games);
+        percent = findViewById(R.id.percent);
     }
 
     private void setAdapter(){
-        listView = findViewById(R.id.games);
-        try {
-            PlayerDTO player = gc.getPlayer();
-            GameAdapter adapter = new GameAdapter(this, player.getAllGames());
-            listView.setAdapter(adapter);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        GameAdapter adapter = new GameAdapter(this, player.getAllGames());
+        listView.setAdapter(adapter);
     }
 
     private void showInfo(){
-        try {
-            //Formatting the percentage
-            NumberFormat format = NumberFormat.getPercentInstance();
-            String percentage = format.format(gc.getPlayerRanking());
-            //Finding and setting text to textview
-            percent = findViewById(R.id.percent);
-            percent.setText("You've won " + percentage + " of the time");
-        } catch (Exception e) {
-            e.printStackTrace();
+        NumberFormat format = NumberFormat.getPercentInstance();  //Formatting the percentage
+        String percentage = format.format(player.getRanking()); //
+        String percent_message = String.format(getResources().getString(R.string.won_percent), percentage);
+        percent.setText(percent_message);
+    }
+
+    private void setDisplay(){
+        if (player.hasPlayed()) {  //If he player has already played, start setting everything
+            setAdapter();
+            showInfo();
+        }
+        else{
+            percent.setText(R.string.no_played_yet);  //If they haven't, just show a message
         }
     }
 }

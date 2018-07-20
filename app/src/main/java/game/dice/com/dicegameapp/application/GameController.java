@@ -13,7 +13,6 @@ public class GameController {
 
 
 	public GameController() {
-
 	}
 
 	public void createPlayer(String name) throws Exception {
@@ -43,16 +42,4 @@ public class GameController {
         List<Game> games = player.getAllGames();
         return games.get(games.size()-1).getValueDices();
     }
-
-	public double getPlayerRanking() throws Exception{
-		Player player = repository.getPlayer();
-		List<Game> games = player.getAllGames();
-
-		double wins = 0.0;
-		for (Game game : games) {
-			if (game.hasWon())
-				wins++;
-		}
-		return wins / games.size();
-	}
 }

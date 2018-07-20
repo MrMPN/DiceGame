@@ -30,4 +30,13 @@ public class PlayerDTO {
     public boolean hasPlayed(){
         return hasPlayed;
     }
+
+    public double getRanking(){
+        double wins = 0.0;
+        for (GameDTO game : gamesDTO) {
+            if (game.hasWon())
+                wins++;
+        }
+        return wins / gamesDTO.size();
+    }
 }

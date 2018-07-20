@@ -10,14 +10,16 @@ import game.dice.com.dicegameapp.R;
 import game.dice.com.dicegameapp.application.GameController;
 
 public class UserActivity extends AppCompatActivity {
+    TextInputEditText input;
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
 
-        TextInputEditText input = findViewById(R.id.input);
-        final FloatingActionButton fab = findViewById(R.id.addName);
+        input = findViewById(R.id.input);
+        fab = findViewById(R.id.addName);
 
         input.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,7 +38,6 @@ public class UserActivity extends AppCompatActivity {
     }
 
     private void createPlayer(){
-        TextInputEditText input = findViewById(R.id.input);
         String name = input.getText().toString();
         GameController gc = new GameController();
         try {

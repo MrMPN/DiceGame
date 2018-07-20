@@ -34,7 +34,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        changeToGameMode();
+        try {
+            changeToGameMode();
+        } catch (Exception e) {
+            e.printStackTrace(); //No player, we print the error but do nothing
+        }
     }
 
     private void innitViews(){
@@ -62,50 +66,43 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void changeToGameMode(){
+    private void changeToGameMode() throws Exception {
         innitViews();
-        try {
-            nameTextView.setVisibility(View.VISIBLE);
-            nameTextView.setText(gc.getPlayerName());
-            playButton.setVisibility(View.VISIBLE);
-            warningText.setVisibility(View.GONE);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void changeDice(){
-        innitViews();
-        dice1.setVisibility(View.VISIBLE);
-        dice2.setVisibility(View.VISIBLE);
-        try {
-            //Get the dice values
-            int[] diceValues = gc.getResultLastGame();
-            dice1.setText(String.valueOf(diceValues[0]));
-            dice2.setText(String.valueOf(diceValues[1]));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void changeMessage(boolean result){
-        innitViews();
-        messageText.setVisibility(View.VISIBLE);
-        if (result){
-            messageText.setText("You've won!");}
-        else{
-            messageText.setText("You've lost...");}
+        nameTextView.setVisibility(View.VISIBLE);
+        nameTextView.setText(gc.getPlayerName()); //This can throw an error
+        playButton.setVisibility(View.VISIBLE);
+        warningText.setVisibility(View.GONE);
     }
 
     private void playGame(){
         try {
-            boolean result = gc.playGame();
-            changeDice();
+            innitViews();
+            boolean result = gc.playGame(); // This can throw an error
+            int[] diceValues = gc.getResultLastGame(); // This can throw an error
             changeMessage(result);
+            changeDice(diceValues);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+    private void changeDice(int[] diceValues){
+        dice1.setVisibility(View.VISIBLE);
+        dice2.setVisibility(View.VISIBLE);
+
+        dice1.setText(String.valueOf(diceValues[0]));
+        dice2.setText(String.valueOf(diceValues[1]));
+    }
+
+    private void changeMessage(boolean result){
+        messageText.setVisibility(View.VISIBLE);
+        if (result){
+            messageText.setText(R.string.main_won);}
+        else{
+            messageText.setText(R.string.main_lost);}
+    }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

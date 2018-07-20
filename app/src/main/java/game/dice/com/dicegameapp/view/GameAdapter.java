@@ -78,7 +78,7 @@ public class GameAdapter extends BaseAdapter {
     private void setData(int[] diceValues, boolean hasWon){
         dice1.setText(String.valueOf(diceValues[0]));
         dice2.setText(String.valueOf(diceValues[1]));
-        if (hasWon){result.setText("Won");}
-        else{result.setText("Lost");}
+        if (hasWon){result.setText(R.string.listview_won);}
+        else{result.setText(R.string.listview_lost);}
     }
 }
