@@ -1,6 +1,9 @@
 package game.dice.com.dicegameapp.view;
 
 import android.content.Intent;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import game.dice.com.dicegameapp.R;
@@ -20,10 +24,12 @@ public class MainActivity extends AppCompatActivity {
     TextView nameTextView;
     Button playButton;
     TextView warningText;
-    TextView dice1;
-    TextView dice2;
+    ImageView dice1;
+    ImageView dice2;
     TextView messageText;
     FloatingActionButton fab;
+    Resources res;
+    TypedArray icons;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void innitViews(){
+        res = getResources();
+        icons = res.obtainTypedArray(R.array.dice_numbers);
+
         fab = findViewById(R.id.addUser);
         nameTextView = findViewById(R.id.name);
         playButton = findViewById(R.id.play);
@@ -68,7 +77,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void changeToGameMode() throws MissingPlayerException {
-        innitViews();
+        dice1.setVisibility(View.GONE);
+        dice2.setVisibility(View.GONE);
+        messageText.setVisibility(View.GONE);
+
         nameTextView.setVisibility(View.VISIBLE);
         nameTextView.setText(controller.getPlayerName()); //This can throw an error
         playButton.setVisibility(View.VISIBLE);
@@ -77,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void playGame(){
         try {
-            innitViews();
             boolean result = controller.playGame(); // This can throw an error
             int[] diceValues = controller.getResultLastGame(); // This can throw an error
             changeMessage(result);
@@ -91,8 +102,11 @@ public class MainActivity extends AppCompatActivity {
         dice1.setVisibility(View.VISIBLE);
         dice2.setVisibility(View.VISIBLE);
 
-        dice1.setText(String.valueOf(diceValues[0]));
-        dice2.setText(String.valueOf(diceValues[1]));
+        Drawable dice1_icon = icons.getDrawable(diceValues[0]-1);
+        Drawable dice2_icon = icons.getDrawable(diceValues[1]-1);
+        dice1.setImageDrawable(dice1_icon);
+        dice2.setImageDrawable(dice2_icon);
+
     }
 
     private void changeMessage(boolean result){

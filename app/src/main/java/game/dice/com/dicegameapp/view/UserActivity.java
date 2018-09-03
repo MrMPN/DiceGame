@@ -5,22 +5,35 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import game.dice.com.dicegameapp.R;
 import game.dice.com.dicegameapp.application.GameController;
+import game.dice.com.dicegameapp.application.dto.PlayerDTO;
+import game.dice.com.dicegameapp.utilities.MissingPlayerException;
 
 public class UserActivity extends AppCompatActivity {
     TextInputEditText input;
     FloatingActionButton fab;
+    TextView tooltip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
+        innitViews();
+        try{
+            showTooltip();
+        } catch (MissingPlayerException e) {
+            e.printStackTrace();
+        }
+    }
 
+    private void innitViews(){
         input = findViewById(R.id.input);
         fab = findViewById(R.id.addName);
+        tooltip = findViewById(R.id.changeuser);
 
         input.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -44,7 +57,19 @@ public class UserActivity extends AppCompatActivity {
             controller.createPlayer(name);
             finish();
         } catch (IllegalArgumentException e) {
-            Toast.makeText(this, "Player name cannot be empty", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.user_cannnot_empty, Toast.LENGTH_SHORT).show();
         }
     }
+
+    private PlayerDTO checkPlayer() throws MissingPlayerException {
+        GameController controller = new GameController();
+        return controller.getPlayer();
+    }
+
+    private void showTooltip() throws MissingPlayerException{
+        PlayerDTO player = checkPlayer();
+        tooltip.setVisibility(View.VISIBLE);
+        tooltip.setText(String.format(getResources().getString(R.string.user_tooltip), player.getName()));
+    }
+
 }

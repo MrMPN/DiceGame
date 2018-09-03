@@ -59,7 +59,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/baseline_add_black_24" />
 
-    <TextView
+    <ImageView
         android:id="@+id/item_dice1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -69,10 +69,9 @@
         app:layout_constraintEnd_toStartOf="@+id/dice2"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline3"
-        tools:text="1" />
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
-    <TextView
+    <ImageView
         android:id="@+id/dice2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -82,8 +81,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/item_dice1"
-        app:layout_constraintTop_toTopOf="@+id/guideline3"
-        tools:text="5" />
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline3"

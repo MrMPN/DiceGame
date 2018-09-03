@@ -10,4 +10,6 @@
     <string name="throw_dice">THROW DICE</string>
     <string name="enter_a_player_name">Enter a player name</string>
     <string name="won_percent">You\'ve won  %1$s of the time.</string>
+    <string name="user_cannnot_empty">Player name cannot be empty</string>
+    <string name="user_tooltip">"Not %1$s? Enter another name.</string>
 </resources>
