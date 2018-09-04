@@ -1,10 +1,13 @@
 package game.dice.com.dicegameapp.view;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +20,7 @@ public class UserActivity extends AppCompatActivity {
     TextInputEditText input;
     FloatingActionButton fab;
     TextView tooltip;
+    GameController controller = new GameController();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +45,6 @@ public class UserActivity extends AppCompatActivity {
                 fab.setVisibility(View.VISIBLE);
             }
         });
-
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,9 +55,10 @@ public class UserActivity extends AppCompatActivity {
 
     private void createPlayer(){
         String name = input.getText().toString();
-        GameController controller = new GameController();
         try {
             controller.createPlayer(name);
+            Intent returnIntent = new Intent();
+            setResult(Activity.RESULT_OK, returnIntent);
             finish();
         } catch (IllegalArgumentException e) {
             Toast.makeText(this, R.string.user_cannnot_empty, Toast.LENGTH_SHORT).show();
@@ -62,7 +66,6 @@ public class UserActivity extends AppCompatActivity {
     }
 
     private PlayerDTO checkPlayer() throws MissingPlayerException {
-        GameController controller = new GameController();
         return controller.getPlayer();
     }
 

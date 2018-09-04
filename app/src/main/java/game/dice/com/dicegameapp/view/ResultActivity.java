@@ -45,8 +45,8 @@ public class ResultActivity extends AppCompatActivity {
     }
 
     private void showInfo(){
-        NumberFormat format = NumberFormat.getPercentInstance();  //Formatting the percentage
-        String percentage = format.format(player.getRanking()); //
+        NumberFormat format = NumberFormat.getPercentInstance();  //
+        String percentage = format.format(player.getRanking()); //Formatting the percentage
         String percent_message = String.format(getResources().getString(R.string.won_percent), percentage);
         percent.setText(percent_message);
     }

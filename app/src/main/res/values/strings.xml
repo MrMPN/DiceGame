@@ -12,4 +12,6 @@
     <string name="won_percent">You\'ve won  %1$s of the time.</string>
     <string name="user_cannnot_empty">Player name cannot be empty</string>
     <string name="user_tooltip">"Not %1$s? Enter another name.</string>
+    <string name="icon_1_description">Dice 1 icon</string>
+    <string name="icon_2_description">Dice 2 icon</string>
 </resources>

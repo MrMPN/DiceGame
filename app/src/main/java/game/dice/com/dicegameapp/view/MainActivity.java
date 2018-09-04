@@ -1,5 +1,6 @@
 package game.dice.com.dicegameapp.view;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
@@ -41,11 +42,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        try {
-            changeToGameMode();
-        } catch (MissingPlayerException e) { //We do nothing
-            e.printStackTrace();
-        }
     }
 
     private void innitViews(){
@@ -64,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), UserActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -77,10 +73,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void changeToGameMode() throws MissingPlayerException {
+        //Hiding views in case they were visible
         dice1.setVisibility(View.GONE);
         dice2.setVisibility(View.GONE);
         messageText.setVisibility(View.GONE);
 
+        //Making visible all the views we need to play
         nameTextView.setVisibility(View.VISIBLE);
         nameTextView.setText(controller.getPlayerName()); //This can throw an error
         playButton.setVisibility(View.VISIBLE);
@@ -102,11 +100,9 @@ public class MainActivity extends AppCompatActivity {
         dice1.setVisibility(View.VISIBLE);
         dice2.setVisibility(View.VISIBLE);
 
-        Drawable dice1_icon = icons.getDrawable(diceValues[0]-1);
-        Drawable dice2_icon = icons.getDrawable(diceValues[1]-1);
-        dice1.setImageDrawable(dice1_icon);
-        dice2.setImageDrawable(dice2_icon);
-
+        //We're using the dice result (-1) to access the correct drawable of the array
+        dice1.setImageDrawable(icons.getDrawable(diceValues[0]-1));
+        dice2.setImageDrawable(icons.getDrawable(diceValues[1]-1));
     }
 
     private void changeMessage(boolean result){
@@ -117,7 +113,18 @@ public class MainActivity extends AppCompatActivity {
             messageText.setText(R.string.main_lost);}
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                try {
+                    changeToGameMode();
+                } catch (MissingPlayerException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -2,10 +2,14 @@ package game.dice.com.dicegameapp.view;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
@@ -17,11 +21,11 @@ import game.dice.com.dicegameapp.domain.Game;
 public class GameAdapter extends BaseAdapter {
 
     static class ViewHolder{
-        TextView dice1;
-        TextView dice2;
+        ImageView dice1;
+        ImageView dice2;
         TextView result;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             dice1 = view.findViewById(R.id.item_dice1);
             dice2 = view.findViewById(R.id.item_dice2);
             result = view.findViewById(R.id.item_result);
@@ -30,6 +34,8 @@ public class GameAdapter extends BaseAdapter {
 
     private Context context;
     private List<GameDTO> items;
+    private Resources res;
+    private TypedArray icons;
 
     public GameAdapter (Context context, List<GameDTO> items) {
         this.context = context;
@@ -53,6 +59,7 @@ public class GameAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+
         ViewHolder holder;
         if (view == null) {
             view = LayoutInflater.from(context).
@@ -80,8 +87,13 @@ public class GameAdapter extends BaseAdapter {
     }
 
     private void setData(ViewHolder holder, int[] diceValues, boolean hasWon){
-        holder.dice1.setText(String.valueOf(diceValues[0]));
-        holder.dice2.setText(String.valueOf(diceValues[1]));
+        //Getting the array containing the drawables
+        res = context.getResources();
+        icons = res.obtainTypedArray(R.array.dice_numbers);
+        //Setting the drawable to each Imageview
+        holder.dice1.setImageDrawable(icons.getDrawable(diceValues[0]-1));
+        holder.dice2.setImageDrawable(icons.getDrawable(diceValues[1]-1));
+
         if (hasWon){
             holder.result.setText(R.string.listview_won);
         }
