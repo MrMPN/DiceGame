@@ -3,18 +3,17 @@ package game.dice.com.dicegameapp.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import game.dice.com.dicegameapp.utilities.NoGameException;
+
 public class Player {
 	private String name;
 	private List<Game> games=new ArrayList<>();
-	private boolean hasPlayed = false;
 	
 	public Player(String name) throws IllegalArgumentException{
-		if (!name.equals("")){
-			this.name=name;
+		if (name.equals("")){
+			throw new IllegalArgumentException();
 		}
-		else{
-		    throw new IllegalArgumentException();
-        }
+		this.name=name;
 	}
 	
 	public String getName(){
@@ -23,14 +22,12 @@ public class Player {
 	
 	public void addGame(Game game){
 		this.games.add(game);
-		hasPlayed = true;
 	}
 
-	public List<Game> getAllGames() {
+	public List<Game> getAllGames() throws NoGameException {
+		if (games.isEmpty()){
+			throw new NoGameException("No games have been played");
+		}
 		return games;
-	}
-
-	public boolean hasPlayed() {
-		return hasPlayed;
 	}
 }

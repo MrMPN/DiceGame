@@ -12,15 +12,14 @@ public class Game {
 	public boolean playGame() {
 		dice1.rollDice();
 		dice2.rollDice();
-		
 		return hasWon();
 	}
 	
-	public int getSumDices(){
+	private int getSumDices(){
 		return dice1.getValue()+dice2.getValue();	
 	}
 	
-	public boolean hasWon() {
+	private boolean hasWon() {
 		return getSumDices()==7;
 	}
 

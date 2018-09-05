@@ -6,6 +6,7 @@ import game.dice.com.dicegameapp.application.dto.PlayerDTO;
 import game.dice.com.dicegameapp.domain.*;
 import game.dice.com.dicegameapp.persistance.PlayerRepository;
 import game.dice.com.dicegameapp.utilities.MissingPlayerException;
+import game.dice.com.dicegameapp.utilities.NoGameException;
 
 
 public class GameController {
@@ -38,9 +39,10 @@ public class GameController {
 		return new PlayerDTO(repository.getPlayer());
 	}
 
-	public int[] getResultLastGame() throws MissingPlayerException{
+	public int[] getResultLastGame() throws MissingPlayerException, NoGameException {
 		Player player = repository.getPlayer();
-        List<Game> games = player.getAllGames();
-        return games.get(games.size()-1).getValueDices();
+		List<Game> games;
+		games = player.getAllGames();
+		return games.get(games.size()-1).getValueDices();
     }
 }

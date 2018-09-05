@@ -5,33 +5,37 @@ import java.util.List;
 
 import game.dice.com.dicegameapp.domain.Game;
 import game.dice.com.dicegameapp.domain.Player;
+import game.dice.com.dicegameapp.utilities.NoGameException;
 
 public class PlayerDTO {
     private String name;
     private List<GameDTO> gamesDTO = new ArrayList<>();
-    private boolean hasPlayed;
 
     public PlayerDTO(Player player){
         this.name = player.getName();
-        for(Game game: player.getAllGames()){
-            this.gamesDTO.add(new GameDTO(game));
+        try {
+            for(Game game: player.getAllGames()){
+                this.gamesDTO.add(new GameDTO(game));
+            }
+        } catch (Exception e) {
         }
-        this.hasPlayed = player.hasPlayed();
     }
 
     public String getName(){
         return name;
     }
 
-    public List<GameDTO> getAllGames() {
+    public List<GameDTO> getAllGames() throws NoGameException {
+        if (gamesDTO.isEmpty()){
+            throw new NoGameException("No games have been played");
+        }
         return gamesDTO;
     }
 
-    public boolean hasPlayed(){
-        return hasPlayed;
-    }
-
-    public double getRanking(){
+    public double getRanking() throws NoGameException {
+        if (gamesDTO.isEmpty()){
+            throw new NoGameException("Cannot get ranking, no games have been played.");
+        }
         double wins = 0.0;
         for (GameDTO game : gamesDTO) {
             if (game.hasWon())

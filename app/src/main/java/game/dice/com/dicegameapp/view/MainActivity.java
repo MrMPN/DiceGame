@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -72,23 +71,24 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Hiding views we don't need anymore and making others visible
+     * @throws MissingPlayerException
+     */
     private void changeToGameMode() throws MissingPlayerException {
-        //Hiding views in case they were visible
         dice1.setVisibility(View.GONE);
         dice2.setVisibility(View.GONE);
         messageText.setVisibility(View.GONE);
-
-        //Making visible all the views we need to play
         nameTextView.setVisibility(View.VISIBLE);
-        nameTextView.setText(controller.getPlayerName()); //This can throw an error
+        nameTextView.setText(controller.getPlayerName());
         playButton.setVisibility(View.VISIBLE);
         warningText.setVisibility(View.GONE);
     }
 
     private void playGame(){
         try {
-            boolean result = controller.playGame(); // This can throw an error
-            int[] diceValues = controller.getResultLastGame(); // This can throw an error
+            boolean result = controller.playGame();
+            int[] diceValues = controller.getResultLastGame();
             changeMessage(result);
             changeDice(diceValues);
         } catch (Exception e) {
@@ -99,8 +99,6 @@ public class MainActivity extends AppCompatActivity {
     private void changeDice(int[] diceValues){
         dice1.setVisibility(View.VISIBLE);
         dice2.setVisibility(View.VISIBLE);
-
-        //We're using the dice result (-1) to access the correct drawable of the array
         dice1.setImageDrawable(icons.getDrawable(diceValues[0]-1));
         dice2.setImageDrawable(icons.getDrawable(diceValues[1]-1));
     }
